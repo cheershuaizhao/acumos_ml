@@ -12,10 +12,9 @@ restURL = "http://localhost:3330/classify"
 x_test= pd.read_csv("test_data.csv", header=None, names=['review'])
 y_test = pd.read_csv("test_label.csv", header=None, names=['label'])
 
-def connector_prediction(x_test, y_true):
+def connector_prediction(x_test):
     data = pb.Input()
     data.review.extend(x_test)
-    data.g_truth.extend(y_true)
     r = requests.post(restURL, data.SerializeToString())
     of = pb.Output()
     of.ParseFromString(r.content)
@@ -24,3 +23,5 @@ def connector_prediction(x_test, y_true):
 #get purediction
 yhat = connector_prediction(x_test)
 yhat = list(yhat)
+
+
